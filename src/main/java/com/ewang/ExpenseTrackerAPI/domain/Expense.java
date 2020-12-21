@@ -16,6 +16,19 @@ public class Expense {
     private int year;
     private String month;
 
+    //Need a no argument constructor for JPA
+    public Expense() {
+
+    }
+
+    Expense(String name, String description, double amount, int year, String month) {
+        this.name = name;
+        this.description = description;
+        this.amount = amount;
+        this.year = year;
+        this.month = month;
+    }
+
     public Long getId() {
         return id;
     }
