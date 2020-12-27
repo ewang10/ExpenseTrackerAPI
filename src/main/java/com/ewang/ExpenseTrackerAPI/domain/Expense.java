@@ -21,7 +21,7 @@ public class Expense {
 
     }
 
-    Expense(String name, String description, double amount, int year, String month) {
+    public Expense(String name, String description, double amount, int year, String month) {
         this.name = name;
         this.description = description;
         this.amount = amount;
