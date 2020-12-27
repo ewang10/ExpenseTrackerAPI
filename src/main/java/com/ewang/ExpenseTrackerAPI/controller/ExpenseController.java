@@ -20,18 +20,31 @@ public class ExpenseController {
         return repository.findAll();
     }
 
-    @GetMapping("/expense/{id}")
+    @GetMapping("/expenses/{id}")
     Expense getExpenseById(@PathVariable Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ExpenseNotFoundException(id));
     }
 
-    @PostMapping("/expense")
+    @GetMapping("/expenses/year/{year}")
+    List<Expense> getExpensesByYear(@PathVariable int year) {
+        return repository.findByYear(year);
+    }
+
+    @GetMapping("/expenses/year/{year}/month/{month}")
+    List<Expense> getExpensesByYearAndMonth(@PathVariable int year, @PathVariable String month) {
+        if ("All".equals(month)) {
+            return repository.findByYear(year);
+        }
+        return repository.findByYearAndMonth(year, month);
+    }
+
+    @PostMapping("/expenses")
     Expense createExpense(@RequestBody Expense expense) {
         return repository.save(expense);
     }
 
-    @PutMapping("/expense/{id}")
+    @PutMapping("/expenses/{id}")
     Expense updateExpense(@RequestBody Expense newExpense, @PathVariable Long id) {
         return repository.findById(id)
                 .map(expense -> {
@@ -48,7 +61,7 @@ public class ExpenseController {
                 });
     }
 
-    @DeleteMapping("/expense/{id}")
+    @DeleteMapping("/expenses/{id}")
     void deleteExpense(@PathVariable Long id) {
         repository.deleteById(id);
     }
