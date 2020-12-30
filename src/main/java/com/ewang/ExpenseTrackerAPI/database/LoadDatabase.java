@@ -17,10 +17,12 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(ExpenseRepository expenseRepository, UserRepository userRepository) {
         return args -> {
-            log.info("Preloading " + expenseRepository.save(new Expense("test1", "description1", 10, 2020, "November")));
-            log.info("Preloading " + expenseRepository.save(new Expense("test2", "description2", 11, 2020, "December")));
-            log.info("Preloading " + userRepository.save(new User("testUser1", "testPassword1")));
-            log.info("Preloading " + userRepository.save(new User("testUser2", "testPassword2")));
+            expenseRepository.save(new Expense("test1", "description1", 10, 2020, "November"));
+            expenseRepository.save(new Expense("test2", "description2", 11, 2020, "December"));
+            expenseRepository.findAll().forEach(expense -> log.info("Preloaded " + expense));
+            userRepository.save(new User("testUser1", "testPassword1"));
+            userRepository.save(new User("testUser2", "testPassword2"));
+            userRepository.findAll().forEach(user -> log.info("Preloaded " + user));
         };
     }
 }
